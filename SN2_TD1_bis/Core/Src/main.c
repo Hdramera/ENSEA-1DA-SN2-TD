@@ -18,12 +18,14 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "spi.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
+#include "vu_meter.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,7 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+h_vu_t h_vu;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -55,7 +57,11 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int  _write(int file, char *ptr, int len)
+{
+	HAL_UART_Transmit(&huart2, (uint8_t *)ptr, (uint16_t)len, HAL_MAX_DELAY);
+	return len;
+}
 /* USER CODE END 0 */
 
 /**
@@ -87,14 +93,33 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
+  MX_SPI3_Init();
   /* USER CODE BEGIN 2 */
-
+  uint8_t Data;
+  printf("\r\n==============================================================\n");
+  vu_init(&h_vu, &hspi3);
+  vu_blink(&h_vu);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+//	  if (HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin)== GPIO_PIN_RESET)
+//	  {
+//		  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+//		  HAL_Delay(100); // 100ms = 10 Hz
+//	  }
+//	  else
+//	  {
+//		  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+//	  }
+//	uint8_t valeur;
+//	HAL_UART_Receive(&huart2, &valeur, 1, HAL_MAX_DELAY);
+//	HAL_UART_Transmit(&huart2, &valeur, 1, HAL_MAX_DELAY);
+	  vu_blink(&h_vu);
+	  HAL_Delay(1000);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

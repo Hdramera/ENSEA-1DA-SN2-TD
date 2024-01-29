@@ -1,0 +1,10 @@
+15:14:37 **** Incremental Build of configuration Debug for project SN2_TD1_bis ****
+make -j12 all 
+arm-none-eabi-size   SN2_TD1_bis.elf 
+   text	   data	    bss	    dec	    hex	filename
+  18192	    112	   2152	  20456	   4fe8	SN2_TD1_bis.elf
+Finished building: default.size.stdout
+ 
+
+15:14:37 Build Finished. 0 errors, 0 warnings. (took 727ms)
+
